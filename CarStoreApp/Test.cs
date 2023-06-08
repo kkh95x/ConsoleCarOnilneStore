@@ -1,7 +1,7 @@
 ﻿using Data;
 using Domain;
 using System.Diagnostics;
-internal class Program
+internal class Test
 {
     private static void Main(string[] args)
     {
