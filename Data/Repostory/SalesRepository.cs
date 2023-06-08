@@ -9,43 +9,40 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repostory
 {
-    public class SalesRepository : IRepostory<Sale>
+    public class SalesRepository : Repostory<Sale>
 
     {
-        
-        public void delete(Sale row)
+        public SalesRepository(MyDbContext myDb) : base(myDb)
         {
-            using var myDb = new MyDbContext();
+
+        }
+
+        public override void delete(Sale row)
+        {
 
             myDb.Sales.Remove(row); 
             myDb.SaveChanges();
         }
 
-        public Sale? get(int id)
+        public override Sale? get(int id)
         {
-            using var myDb = new MyDbContext();
 
-            return myDb.Sales.Find(id);
+            return base.myDb.Sales.Find(id);
         }
 
-        public List<Sale> getAll()
+        public override List<Sale> getAll()
         {
-            using var myDb = new MyDbContext();
-
             return myDb.Sales.Include((sale)=>sale.Car).Include((sale)=>sale.Customer).ToList();    
         }
 
-        public void save(Sale newRow)
+        public override void save(Sale newRow)
         {
-            using var myDb = new MyDbContext();
-
             myDb.Sales.Add(newRow);
             myDb.SaveChanges(); 
         }
 
-        public void update(Sale row)
+        public  override void update(Sale row)
         {
-            using var myDb = new MyDbContext();
 
             myDb.Sales.Update(row);
             myDb.SaveChanges();

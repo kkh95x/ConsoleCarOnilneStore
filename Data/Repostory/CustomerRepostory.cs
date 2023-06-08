@@ -9,44 +9,41 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repostory
 {
-    public class CustomerRepostory : IRepostory<Customer>
+    public class CustomerRepostory : Repostory<Customer>
     {
-       
-        public void delete(Customer row)
+        public CustomerRepostory(MyDbContext myDb):base(myDb)
         {
-            using var myDb = new MyDbContext();
+           
+        }
+        public override void delete(Customer row)
+        {
 
             myDb.Customers.Remove(row);
             myDb.SaveChanges();
            
         }
 
-        public Customer? get(int id)
+        public override Customer? get(int id)
         {
             using var myDb = new MyDbContext();
 
             return myDb.Customers.Find(id)  ;
         }
 
-        public List<Customer> getAll()
+        public override List<Customer> getAll()
         {
-            using var myDb = new MyDbContext();
 
             return myDb.Customers.ToList();
         }
 
-        public void save(Customer newRow)
+        public override void save(Customer newRow)
         {
-            using var myDb = new MyDbContext();
-
             myDb.Customers.Add(newRow);
             myDb.SaveChanges();
         }
 
-        public void update(Customer row)
+        public override void update(Customer row)
         {
-            using var myDb = new MyDbContext();
-
             myDb.Customers.Update(row);
             myDb.SaveChanges();
 

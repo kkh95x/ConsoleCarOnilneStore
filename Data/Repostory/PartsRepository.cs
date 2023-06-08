@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repostory
 {
-    public class PartsRepository : IRepostory<Part>
+    public class PartsRepository : Repostory<Part>
     {
-       
-        public void delete(Part row)
+        public PartsRepository(MyDbContext myDb) : base(myDb)
+        {
+
+        }
+        public override void delete(Part row)
         {
             using var myDb = new MyDbContext();
 
@@ -20,14 +23,14 @@ namespace DataLayer.Repostory
             myDb.SaveChanges();
         }
 
-        public Part? get(int id)
+        public override Part? get(int id)
         {
             using var myDb = new MyDbContext();
 
             return myDb.Parts.Find(id);
         }
 
-        public List<Part> getAll()
+        public override List<Part> getAll()
         {
             using var myDb = new MyDbContext();
 
@@ -35,7 +38,7 @@ namespace DataLayer.Repostory
             
         }
 
-        public void save(Part newRow)
+        public override void save(Part newRow)
         {
             using var myDb = new MyDbContext();
 
@@ -45,7 +48,7 @@ namespace DataLayer.Repostory
 
         }
 
-        public void update(Part row)
+        public override void update(Part row)
         {
             using var myDb = new MyDbContext();
 

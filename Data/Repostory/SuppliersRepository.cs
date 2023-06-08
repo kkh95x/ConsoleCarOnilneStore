@@ -8,44 +8,41 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repostory
 {
-    public class SuppliersRepository : IRepostory<Supplier>
+    public class SuppliersRepository : Repostory<Supplier>
     {
-
-        public SuppliersRepository() { }
-       
-        public void delete(Supplier row)
+        public SuppliersRepository(MyDbContext myDb) : base(myDb)
         {
-            using var myDb = new MyDbContext();
+
+        }
+       
+        public override void delete(Supplier row)
+        {
 
             myDb.Suppliers.Remove(row);
             myDb.SaveChanges();
         }
 
-        public Supplier? get(int id)
+        public override Supplier? get(int id)
         {
-            using var myDb = new MyDbContext();
 
             return myDb.Suppliers.Find(id);
         }
 
-        public List<Supplier> getAll()
+        public override List<Supplier> getAll()
         {
-            using var myDb = new MyDbContext();
 
             return myDb.Suppliers.ToList(); 
         }
 
-        public void save(Supplier newRow)
+        public override void save(Supplier newRow)
         {
-            using var myDb = new MyDbContext();
 
             myDb.Suppliers.Add(newRow);
             myDb.SaveChanges();
         }
 
-        public void update(Supplier row)
+        public override void update(Supplier row)
         {
-            using var myDb = new MyDbContext();
 
             myDb.Suppliers.Update(row);
             myDb.SaveChanges();

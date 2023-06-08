@@ -9,42 +9,39 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repostory
 {
-    public class CarsRepostory : IRepostory<Car>
+    public class CarsRepostory : Repostory<Car>
     {
+        public CarsRepostory(MyDbContext myDb) : base(myDb) { }
        
-        public void delete(Car row)
+        
+        public override void delete(Car row)
         {
-            using var myDb = new MyDbContext();
-            myDb.Cars.Remove(row);
+            base.myDb.Cars.Remove(row);
             myDb.SaveChanges();
 
         }
 
-        public Car? get(int id)
+        public override Car? get(int id)
         {
-            using var myDb = new MyDbContext();
 
             return myDb.Cars.Find(id);
         }
 
-        public List<Car> getAll()
+        public override List<Car> getAll()
         {
-            using var myDb = new MyDbContext();
 
             return myDb.Cars.Include((car)=>car.Parts).ToList();
         }
 
-        public void save(Car newRow)
+        public override void save(Car newRow)
         {
-            using var myDb = new MyDbContext();
 
             myDb.Cars.Add(newRow);
             myDb.SaveChanges();
         }
 
-        public void update(Car row)
+        public override void update(Car row)
         {
-            using var myDb = new MyDbContext();
 
             myDb.Update(row);
             myDb.SaveChanges();
